@@ -53,11 +53,7 @@ header {
     margin: auto;
 }
 
-.container::after {
-    clear: both;
-    content: '';
-    display: table;
-}
+
 
 #wrapper {
     padding-top: 40px;
@@ -65,5 +61,17 @@ header {
 }
 
 h2 {
+    color: white;
+}
+
+#wrapper {
+    padding-top: 35px;
+}
+
+h2 {
+    color: white;
+}
+
+p {
     color: white;
 }

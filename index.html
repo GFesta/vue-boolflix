@@ -17,24 +17,44 @@
                 <h1>BOOLFLIX</h1>
             </div>
             <div class="searchbar-right">
-                <input type="text" class="input-ricerca" placeholder="Ricerca...">
-                <button class="bottone-ricerca">
-                    Cerca
-                </button>
+                <input type="text" class="input-ricerca" placeholder="Ricerca..."
+                v-model="ricerca" @keyup.enter="ricercaFilm">
+                <button class="bottone-ricerca" @click="ricercaFilm">Cerca</button>
+                
             </div>
         </header>
         <!-- fine top side + search -->
 
         
         <div id="wrapper" class="container">
-            <h2>Ricerca in corso...</h2>
+            <h2 v-if="ricercaInCorso"> Ricerca in corso... </h2>
+            <h2 v-else-if="titolo && trovati.length"> Film trovati: {{ titolo }}</h2>
+            <h2 v-else-if="titolo">
+                Nessun risultato trovato nella ricerca "{{ titolo }}"
+            </h2>
 
+            <div class="card" v-for="risultato in risultati">
+                <div class="card-inner">
+                        <ul>
+                            <p>
+                                {{ trovati.title ? trovati.title : trovati.name }}
+                            </p>
+
+                            <p>
+                                {{ trovati.original_title ? trovati.original_title : trovati.original_name }}
+                            </p>
+
+                            
+                        </ul>
+                    
+                </div>
+            </div>
         </div>
+        
 
 
 
-
-
+    </div>
     <script src="main.js" charset="utf-8"></script>
 </body>
 </html>
