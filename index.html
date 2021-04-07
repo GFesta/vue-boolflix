@@ -17,35 +17,52 @@
                 <h1>BOOLFLIX</h1>
             </div>
             <div class="searchbar-right">
-                <input type="text" class="input-ricerca" placeholder="Ricerca..."
-                v-model="ricerca" @keyup.enter="ricercaFilm">
-                <button class="bottone-ricerca" @click="ricercaFilm">Cerca</button>
-                
+                <input type="text" class="input-ricerca" @keyup.enter="ricerca"
+                placeholder="Ricerca..." v-model="testo_ricerca">
+                <button class="bottone-ricerca" @click="ricerca">Cerca</button>
             </div>
         </header>
         <!-- fine top side + search -->
 
-        
+        <!-- main cards -->
         <div id="wrapper" class="container">
-            <h2 v-if="ricercaInCorso"> Ricerca in corso... </h2>
-            <h2 v-else-if="titolo && trovati.length"> Film trovati: {{ titolo }}</h2>
-            <h2 v-else-if="titolo">
-                Nessun risultato trovato nella ricerca "{{ titolo }}"
-            </h2>
 
+            <h2 v-if="ricerca_in_corso">Ricerca in corso...</h2>
+            <h2 v-else-if="testo_titolo && risultati.length">Risultati ricerca per: "{{ testo_titolo }}"</h2>
+            <h2 v-else-if="testo_titolo">Nessun risultato trovato per la ricerca "{{ testo_titolo }}"</h2>
+
+            <!-- cards -->
             <div class="card" v-for="risultato in risultati">
-                <p>{{ trovati.title }}</p>
-                <p>{{ trovati.original_title }}</p>
-                <p>{{ trovati.original_language }}</p>
-                <p>{{ trovati.vote_average }}</p>
-                    
+                <div class="card-inside">
+                    <div class="card-front">
+                        <img :src="getPoster(risultato.poster_path)"
+                            :alt="risultato.title ? risultato.title : risultato.name">
+                    </div>
+                    <div class="card-back">
+                        <ul>
+                            <li>{{ risultato.title ? risultato.title : risultato.name }}</li>
+                            <li>{{ risultato.original_title ? risultato.original_title : risultato.original_name }}</li>
+                            <li v-if="bandiere_disponibili.includes(risultato.original_language)">
+                                <img class="bandiera"
+                                    :alt="risultato.original_language"
+                                    :src="getFlags(risultato.original_language)">
+                            </li>
+                            <li v-else>{{ risultato.original_language }}</li>
+                            <li v-if="risultato.vote_average > 0">
+                                <i v-for="i in getStars(risultato.vote_average)"
+                                    class="fas fa-star yellow"></i>
+                                <i v-for="i in (5 - getStars(risultato.vote_average))"
+                                    class="far fa-star yellow"></i>
+                            </li>
+                            <li v-else>n.d.</li>
+                            <li>{{ risultato.overview }}</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+            <!-- fine cards--->
         </div>
-        
-
-
-
+        <!-- fine main cards- -->
     </div>
     <script src="main.js" charset="utf-8"></script>
 </body>
