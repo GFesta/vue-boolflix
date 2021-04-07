@@ -34,18 +34,10 @@
             </h2>
 
             <div class="card" v-for="risultato in risultati">
-                <div class="card-inner">
-                        <ul>
-                            <p>
-                                {{ trovati.title ? trovati.title : trovati.name }}
-                            </p>
-
-                            <p>
-                                {{ trovati.original_title ? trovati.original_title : trovati.original_name }}
-                            </p>
-
-                            
-                        </ul>
+                <p>{{ trovati.title }}</p>
+                <p>{{ trovati.original_title }}</p>
+                <p>{{ trovati.original_language }}</p>
+                <p>{{ trovati.vote_average }}</p>
                     
                 </div>
             </div>

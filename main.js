@@ -32,16 +32,26 @@ var app = new Vue({
                     }
                 };
 
-                //richiamo ajax a TMBD e recupero films
+                //richiamo ajax a TMBD e trovo films
                 axios
-                .get(apiUrlPrincipale + 'search/movie',parameters)
+                .get(apiUrlPrincipale + 'search/movie', parameters)
                 .then((risp) => {
                     this.trovati = this.trovati.concat(risp.data.results);
                     //console.log(risp.data.results);
                     this.ricercaInCorso = false;
+                });
+                //richiamo ajax a TMBD e trovo le serie TV
+                axios
+                .get(apiUrlPrincipale + 'search/tv', parameters)
+                .then((risp) => {
+                    this.trovati = this.trovati.concat(risp.data.results);
+                    this.ricercaInCorso = false;
                 })
             }
             
+        },
+        get_numero_stelle(voto) {
+            return Math.ceil(voto / 2);
         },
         
     },
