@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -40,22 +41,28 @@
                     </div>
                     <div class="card-back">
                         <ul>
-                            <li>{{ risultato.title ? risultato.title : risultato.name }}</li>
-                            <li>{{ risultato.original_title ? risultato.original_title : risultato.original_name }}</li>
+                            <!-- <li><h3>{{ risultato.title ? risultato.title : risultato.name }}</h3></li> -->
+                            <li><h4 class="title">{{ risultato.original_title ? risultato.original_title : risultato.original_name }}</h4></li>
+
+                            <!-- flags -->
                             <li v-if="bandiere_disponibili.includes(risultato.original_language)">
                                 <img class="bandiera"
                                     :alt="risultato.original_language"
                                     :src="getFlags(risultato.original_language)">
                             </li>
                             <li v-else>{{ risultato.original_language }}</li>
-                            <li v-if="risultato.vote_average > 0">
+                            <!-- fine flags -->
+
+                            <!-- stars vote -->
+                            <li v-if="risultato.vote_average > 0" class="title"> Voto: 
                                 <i v-for="i in getStars(risultato.vote_average)"
                                     class="fas fa-star yellow"></i>
                                 <i v-for="i in (5 - getStars(risultato.vote_average))"
                                     class="far fa-star yellow"></i>
                             </li>
+                            <!-- fine stars vote -->
                             <li v-else>n.d.</li>
-                            <li>{{ risultato.overview }}</li>
+                            <li class="overview">{{ risultato.overview }}</li>
                         </ul>
                     </div>
                 </div>

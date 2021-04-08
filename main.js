@@ -2,7 +2,7 @@ const api_url_base = 'https://api.themoviedb.org/3/';
 const api_key = '28fd8bc3a7d1855c34222ce81dae240e';
 const url_base_locandina = 'https://image.tmdb.org/t/p/';
 const dimensione_locandina = 'w342';
-const locandina_default = 'img/netflix.png';
+const locandina_default = 'img/not-found-poster.jpg';
 
 var app = new Vue({
     el: '#app',
@@ -30,12 +30,13 @@ var app = new Vue({
                 let parameters = {
                     params: {
                         api_key: api_key,
-                        query: testo_utente
+                        query: testo_utente,
                     }
                 };
 
                 //richiamo ajax a TMBD e trovo films
-                axios.get(api_url_base + 'search/movie', parameters)
+                axios
+                    .get(api_url_base + 'search/movie', parameters)
                     .then((risp) => {
                     console.log(risp.data.results);
                     this.risultati = this.risultati.concat(risp.data.results);
@@ -43,9 +44,10 @@ var app = new Vue({
                 });
 
                 // richiamo ajax a TMBD e trovo le serie TV
-                axios.get(api_url_base + 'search/tv', parameters)
+                axios
+                    .get(api_url_base + 'search/tv', parameters)
                     .then((risp) => {
-                    // console.log(risp.data.results);
+                    console.log(risp.data.results);
                     this.risultati = this.risultati.concat(risp.data.results);
                     this.ricerca_in_corso = false;
                 });
@@ -65,7 +67,7 @@ var app = new Vue({
             if(poster_path) {
                 return url_base_locandina + dimensione_locandina + poster_path;
             }
-            return locandina_default;
+            return locandina_default; //se non trova il poster, mi ritorna una img di default
         }
     },
 });
